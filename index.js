@@ -1,17 +1,16 @@
 var mocha = require('mocha');
 var stackFilter = require('mocha/lib/utils').stackTraceFilter();
 const VError = require("verror");
-module.exports = MochaVErrorReporter;
 
 function MochaVErrorReporter(runner)
 {
   mocha.reporters.Base.call(this, runner);
   runner.on('fail', function(test, err) {
-    err.stack = stackFilter(fullStack(err, "    "));
+    err.stack = stackFilter(fullStack(err));
   });
 }
 
-function fullStack(error, indent)
+var fullStack = function(error, indent = "    ", indentLevel = 1)
 {
     if (typeof error.errors === "function")
     {
@@ -20,8 +19,8 @@ function fullStack(error, indent)
         const suppressedErrors = error.errors();
         for (const suppressedError of suppressedErrors)
         {
-            message += `\n${indent}${index} of ${suppressedErrors.length} suppressed errors: `
-            message += `${fullStack(suppressedError, indent + "    ")}`;
+            message += `\n${indent.repeat(indentLevel)}${index} of ${suppressedErrors.length} suppressed errors: `
+            message += `${fullStack(suppressedError, indent, indentLevel+1)}`;
             index++;
         }
         return message;
@@ -32,9 +31,12 @@ function fullStack(error, indent)
         error.stack = error.stack.replace(/caused by.+\n/, "\n");
         if (cause)
         {
-            return `${error.stack.replace(/\n/g, "\n" + indent)}`
-                    + `\n${indent}caused by, ${fullStack(cause, indent + "    ")}`;
+            return `${error.stack.replace(/\n/g, "\n" + indent.repeat(indentLevel))}`
+                    + `\n${indent.repeat(indentLevel)}caused by, ${fullStack(cause, indent, indentLevel+1)}`;
         }
     }
-    return VError.fullStack(error).replace(/\n/g, "\n" + indent);
+    return VError.fullStack(error).replace(/\n/g, "\n" + indent.repeat(indentLevel));
 }
+
+module.exports = MochaVErrorReporter;
+module.exports.fullStack = fullStack;

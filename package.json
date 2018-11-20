@@ -1,11 +1,19 @@
 {
+  "author": "Unscrambl",
   "name": "mocha-verror-reporter",
   "version": "1.0.0",
-  "description": "",
+  "description": "Expand Mocha error reports for stacked VErrors",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "dependencies": {
+    "mocha": "5.2.0",
+    "verror": "1.10.0"
   },
-  "author": "",
-  "license": "ISC"
+  "devDependencies": {
+    "chai": "4.1.2"
+  },
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha -R spec --check-leaks test/*.spec.js"
+  },
+  "license": "Apache-2.0",
+  "repository": "github:unscrambl/mocha-verror-reporter.git"
 }
