@@ -5,7 +5,9 @@
   "description": "Expand Mocha error reports for stacked VErrors",
   "main": "index.js",
   "dependencies": {
+    "@types/mocha": "^5.2.5",
     "mocha": "5.2.0",
+    "typescript": "^3.1.6",
     "verror": "1.10.0"
   },
   "devDependencies": {
