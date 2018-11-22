@@ -1,5 +1,5 @@
 import { Runner, utils as MochaUtils } from "mocha";
-import { VError } from "node_modules/verror/lib/verror";
+import { VError } from "verror";
 
 var stackFilter = MochaUtils.stackTraceFilter();
 
@@ -44,5 +44,3 @@ export class MochaVErrorReporter extends Mocha.reporters.Base
         return VError.fullStack(error).replace(MochaVErrorReporter._REGEX_REPLACE_WITH_INDENT, "\n" + indent.repeat(indentLevel));
     }
 }
-
-
