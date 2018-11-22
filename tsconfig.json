@@ -1,0 +1,24 @@
+{
+    "compilerOptions": {
+        "outDir": "./built",
+        "allowJs": true,
+        "target": "es6",
+        "alwaysStrict": true,
+        "baseUrl": "./",
+        "declaration": true,
+        "experimentalDecorators": true,
+        "lib": [
+            "dom",
+            "es2017"
+        ],
+        "noImplicitThis": true,
+        "noUnusedLocals": true,
+        "preserveConstEnums": true,
+        "removeComments": true,
+        "strictFunctionTypes": true,
+        "strictNullChecks": true
+    },
+    "include": [
+        "./src/**/*"
+    ]
+}
