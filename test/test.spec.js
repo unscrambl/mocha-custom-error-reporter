@@ -9,7 +9,8 @@ var WError = VError.WError;
 var MochaVerrorReporter = require('../built/mochaVErrorReporter.js').MochaVErrorReporter;
 var fullStack = MochaVerrorReporter.fullStack;
 
-describe("MochaVErrorReporter", function() {
+describe("MochaVErrorReporter", () => 
+{
     var indentChars = "----";
     var indentStart = 1;
     var sampleError = new MultiError(
