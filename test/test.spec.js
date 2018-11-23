@@ -31,7 +31,7 @@ describe("MochaVErrorReporter", () =>
         ]
     );
 
-    var fnOutput = stackFilter(fullStack(sampleError, indentChars, indentStart));
+    var fnOutput = fullStack(sampleError, indentChars, indentStart).replace(/\n.*\s{4}at\s.*/g, "");
     
     it("recursively outputs errors", function(){
         expect(fnOutput).to.include("a nested error inside a nested error");
@@ -55,7 +55,7 @@ describe("MochaVErrorReporter", () =>
     });
 
     it("shows the deepest indentation", function(){
-        // maximum indentation should be start + 4, after the error message "a nested error inside a nested error"
-        expect(fnOutput).to.include(indentChars.repeat(indentStart + 4));
+        // maximum indentation should be start + 3, after the error message "a nested error inside a nested error"
+        expect(fnOutput).to.include(indentChars.repeat(indentStart + 3));
     });
 });
