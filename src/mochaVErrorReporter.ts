@@ -1,18 +1,17 @@
 import { Runner, utils as MochaUtils, reporters as MochaReporters } from "mocha";
 import { VError } from "verror";
 
-var stackFilter = MochaUtils.stackTraceFilter();
-
 export class MochaVErrorReporter extends MochaReporters.Base
 {
     private static _DEFAULT_INDENT: string = "    ";
     private static _REMOVE_REPEATED_MESSAGE_REGEX: RegExp = /caused by.+\n/;
     private static _REPLACE_WITH_INDENT_REGEX: RegExp = /\n/g;
+    private static stackFilter = MochaUtils.stackTraceFilter();
 
     constructor(runner: Runner) {
         super(runner);
         runner.on('fail', function(test, err) {
-            err.stack = stackFilter(MochaVErrorReporter.fullStack(err));
+            err.stack = MochaVErrorReporter.stackFilter(MochaVErrorReporter.fullStack(err));
         });
     }
 
