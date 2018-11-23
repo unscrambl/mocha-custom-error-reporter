@@ -6,9 +6,11 @@ export class MochaVErrorReporter extends MochaReporters.Base
     private static _DEFAULT_INDENT: string = "    ";
     private static _REMOVE_REPEATED_MESSAGE_REGEX: RegExp = /caused by.+\n/;
     private static _REPLACE_WITH_INDENT_REGEX: RegExp = /\n/g;
+    private static _REMOVE_AFTER_FIRST_LINE_REGEX: RegExp = /\n/g;
     private static stackFilter = MochaUtils.stackTraceFilter();
 
-    constructor(runner: Runner) {
+    constructor(runner: Runner)
+    {
         super(runner);
         runner.on('fail', function(test, err) {
             err.stack = MochaVErrorReporter.stackFilter(MochaVErrorReporter.fullStack(err));
@@ -19,7 +21,7 @@ export class MochaVErrorReporter extends MochaReporters.Base
     {
         if (typeof error.errors === "function")
         {
-            let message = error.stack.replace(/\n.+/g, "");
+            let message = error.stack.replace(MochaVErrorReporter._REMOVE_AFTER_FIRST_LINE_REGEX, "");
             let index = 1;
             const suppressedErrors = error.errors();
             for (const suppressedError of suppressedErrors)
