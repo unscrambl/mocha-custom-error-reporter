@@ -6,7 +6,7 @@ export class MochaVErrorReporter extends MochaReporters.Base
     private static _DEFAULT_INDENT: string = "    ";
     private static _REMOVE_REPEATED_MESSAGE_REGEX: RegExp = /caused by.+\n/;
     private static _REPLACE_WITH_INDENT_REGEX: RegExp = /\n/g;
-    private static _REMOVE_AFTER_FIRST_LINE_REGEX: RegExp = /\n/g;
+    private static _REMOVE_AFTER_FIRST_LINE_REGEX: RegExp = /\n.+/g;
     private static stackFilter = MochaUtils.stackTraceFilter();
 
     constructor(runner: Runner)
