@@ -33,7 +33,7 @@ describe("MochaVErrorReporter", () =>
 
     var fnOutput = stackFilter(fullStack(sampleError, indentChars, indentStart));
     
-    it("recursively outputs errors", function(done){
+    it("recursively outputs errors", function(){
         expect(fnOutput).to.include("a nested error inside a nested error");
         expect(fnOutput).to.include("a nested error");
         expect(fnOutput).to.include("another nested error");
@@ -43,25 +43,19 @@ describe("MochaVErrorReporter", () =>
         expect(fnOutput).to.include("1 of 2 suppressed errors: WError: a nested error");
         expect(fnOutput).to.include("2 of 2 suppressed errors: Error: another nested error");
         expect(fnOutput).to.include("2 of 2 suppressed errors: WError: exists at the same level with encapsulator");
-        
-        done();
     })
 
-    it("formats indentation", function(done){
+    it("formats indentation", function(){
         expect(fnOutput).to.include(indentChars.repeat(indentStart + 0) + "1 of 2 suppressed errors: ");
         expect(fnOutput).to.include(indentChars.repeat(indentStart + 1) + "caused by, MultiError:");
         expect(fnOutput).to.include(indentChars.repeat(indentStart + 2) + "1 of 2 suppressed errors: ");
         expect(fnOutput).to.include(indentChars.repeat(indentStart + 3) + "caused by, WError:");
         expect(fnOutput).to.include(indentChars.repeat(indentStart + 2) + "2 of 2 suppressed errors: ");
         expect(fnOutput).to.include(indentChars.repeat(indentStart + 0) + "2 of 2 suppressed errors: ");
-        
-        done();
     });
 
-    it("shows the deepest indentation", function(done){
+    it("shows the deepest indentation", function(){
         // maximum indentation should be start + 4, after the error message "a nested error inside a nested error"
         expect(fnOutput).to.include(indentChars.repeat(indentStart + 4));
-        
-        done();
     });
 });
