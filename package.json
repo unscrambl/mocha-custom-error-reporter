@@ -17,8 +17,8 @@
   },
   "scripts": {
     "build": "./node_modules/.bin/tsc --project tsconfig.json",
-    "pretest": "rm -rf built && npm run build",
-    "test": "./node_modules/mocha/bin/mocha -R spec --check-leaks test/*.spec.js"
+    "pretest": "rd /s /q built && npm run build",
+    "test": "node node_modules/mocha/bin/mocha -R spec --check-leaks test/*.spec.js"
   },
   "license": "Apache-2.0",
   "repository": "github:unscrambl/mocha-verror-reporter.git"

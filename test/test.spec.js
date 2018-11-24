@@ -32,7 +32,7 @@ describe("MochaVErrorReporter", () =>
     );
 
     var fnOutput = fullStack(sampleError, indentChars, indentStart).replace(/\n.*\s{4}at\s.*/g, "");
-    
+    console.log(fnOutput);
     it("recursively outputs errors with correct indentation", function()
     {
         const expectedOutput =  "MultiError: first of 2 errors: encapsulating a multierror\n" +
