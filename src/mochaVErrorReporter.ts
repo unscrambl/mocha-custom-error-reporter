@@ -12,13 +12,19 @@ export class MochaVErrorReporter extends MochaReporters.Base
     constructor(runner: Runner)
     {
         super(runner);
-        runner.on("fail", (test, err) =>
+        runner.on("fail", (test, err: Error) =>
         {
-            err.stack = MochaVErrorReporter._MOCHA_STACK_FILTER(MochaVErrorReporter.fullStack(err));
+            err.stack = MochaVErrorReporter._MOCHA_STACK_FILTER(
+                MochaVErrorReporter.fullStack(err));
         });
     }
 
-    public static fullStack(error, indent = MochaVErrorReporter._DEFAULT_INDENT, indentationLevel = 1)
+    public static fullStack(error: Error, indent: string = MochaVErrorReporter._DEFAULT_INDENT): string
+    {
+        return MochaVErrorReporter.fullStackImpl(error, indent, 1);
+    }
+
+    private static fullStackImpl(error, indent = MochaVErrorReporter._DEFAULT_INDENT, indentationLevel = 1)
     {
         if (typeof error.errors === "function")
         {
@@ -29,7 +35,7 @@ export class MochaVErrorReporter extends MochaReporters.Base
             {
                 message += `\n${indent.repeat(indentationLevel)}`;
                 message += `#${index}/${suppressedErrors.length} suppressed errors: `;
-                message += `${MochaVErrorReporter.fullStack(suppressedError, indent, indentationLevel + 1)}`;
+                message += `${MochaVErrorReporter.fullStackImpl(suppressedError, indent, indentationLevel + 1)}`;
                 index++;
             }
             return message;
@@ -43,7 +49,7 @@ export class MochaVErrorReporter extends MochaReporters.Base
                 return `${error.stack.replace(MochaVErrorReporter._REPLACE_WITH_INDENT_REGEX, "\n"
                     + indent.repeat(indentationLevel))}`
                     + `\n${indent.repeat(indentationLevel)}caused by, `
-                    + `${MochaVErrorReporter.fullStack(cause, indent, indentationLevel + 1)}`;
+                    + `${MochaVErrorReporter.fullStackImpl(cause, indent, indentationLevel + 1)}`;
             }
         }
         return VError.fullStack(error).replace(MochaVErrorReporter._REPLACE_WITH_INDENT_REGEX, "\n"
