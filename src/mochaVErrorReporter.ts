@@ -6,7 +6,6 @@ export class MochaVErrorReporter extends MochaReporters.Base
     private static readonly _DEFAULT_INDENT: string = "    ";
     private static readonly _REMOVE_REPEATED_MESSAGE_REGEX: RegExp = /caused by.+\n/;
     private static readonly _REPLACE_WITH_INDENT_REGEX: RegExp = /\n/g;
-    private static readonly _REMOVE_AFTER_FIRST_LINE_REGEX: RegExp = /\n.+/g;
     private static readonly _MOCHA_STACK_FILTER = MochaUtils.stackTraceFilter();
 
     constructor(runner: Runner)
@@ -28,13 +27,13 @@ export class MochaVErrorReporter extends MochaReporters.Base
     {
         if (typeof error.errors === "function")
         {
-            let message = error.stack.replace(MochaVErrorReporter._REMOVE_AFTER_FIRST_LINE_REGEX, "");
-            let index = 1;
             const suppressedErrors = error.errors();
+            let message = `MultiError: with ${suppressedErrors.length} suppressed errors:`;
+            let index = 1;
             for (const suppressedError of suppressedErrors)
             {
                 message += `\n${indent.repeat(indentationLevel)}`;
-                message += `#${index}/${suppressedErrors.length} suppressed errors: `;
+                message += `error #${index}/${suppressedErrors.length}: `;
                 message += `${MochaVErrorReporter.fullStackImpl(suppressedError, indent, indentationLevel + 1)}`;
                 index++;
             }
