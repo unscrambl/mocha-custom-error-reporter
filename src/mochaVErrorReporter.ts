@@ -7,14 +7,14 @@ export class MochaVErrorReporter extends MochaReporters.Base
     private static _REMOVE_REPEATED_MESSAGE_REGEX: RegExp = /caused by.+\n/;
     private static _REPLACE_WITH_INDENT_REGEX: RegExp = /\n/g;
     private static _REMOVE_AFTER_FIRST_LINE_REGEX: RegExp = /\n.+/g;
-    private static stackFilter = MochaUtils.stackTraceFilter();
+    private static _MOCHA_STACK_FILTER = MochaUtils.stackTraceFilter();
 
     constructor(runner: Runner)
     {
         super(runner);
         runner.on("fail", (test, err) =>
         {
-            err.stack = MochaVErrorReporter.stackFilter(MochaVErrorReporter.fullStack(err));
+            err.stack = MochaVErrorReporter._MOCHA_STACK_FILTER(MochaVErrorReporter.fullStack(err));
         });
     }
 
