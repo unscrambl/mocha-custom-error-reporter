@@ -2,7 +2,6 @@
 import { expect } from "chai";
 import * as VError from "verror";
 import { MochaVErrorReporter } from "../src/mochaVErrorReporter";
-const fullStack = MochaVErrorReporter.fullStack;
 
 describe("MochaVErrorReporter", () =>
 {
@@ -25,7 +24,7 @@ describe("MochaVErrorReporter", () =>
         ]
     );
 
-    const fnOutput = fullStack(sampleError, indentChars).replace(/\n.*\s{4}at\s.*/g, "");
+    const fnOutput = MochaVErrorReporter.fullStack(sampleError, indentChars).replace(/\n.*\s{4}at\s.*/g, "");
 
     it("recursively outputs errors with correct indentation",  () =>
     {
