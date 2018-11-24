@@ -1,4 +1,4 @@
-import { Runner, utils as MochaUtils, reporters as MochaReporters } from "mocha";
+import { reporters as MochaReporters, Runner, utils as MochaUtils } from "mocha";
 import { VError } from "verror";
 
 export class MochaVErrorReporter extends MochaReporters.Base
@@ -12,7 +12,8 @@ export class MochaVErrorReporter extends MochaReporters.Base
     constructor(runner: Runner)
     {
         super(runner);
-        runner.on('fail', function(test, err) {
+        runner.on("fail", (test, err) =>
+        {
             err.stack = MochaVErrorReporter.stackFilter(MochaVErrorReporter.fullStack(err));
         });
     }
@@ -26,8 +27,9 @@ export class MochaVErrorReporter extends MochaReporters.Base
             const suppressedErrors = error.errors();
             for (const suppressedError of suppressedErrors)
             {
-                message += `\n${indent.repeat(indentationLevel)}${index} of ${suppressedErrors.length} suppressed errors: `
-                message += `${MochaVErrorReporter.fullStack(suppressedError, indent, indentationLevel+1)}`;
+                message += `\n${indent.repeat(indentationLevel)}`;
+                message += `#${index}/${suppressedErrors.length} suppressed errors: `;
+                message += `${MochaVErrorReporter.fullStack(suppressedError, indent, indentationLevel + 1)}`;
                 index++;
             }
             return message;
@@ -38,10 +40,13 @@ export class MochaVErrorReporter extends MochaReporters.Base
             error.stack = error.stack.replace(MochaVErrorReporter._REMOVE_REPEATED_MESSAGE_REGEX, "\n");
             if (cause)
             {
-                return `${error.stack.replace(MochaVErrorReporter._REPLACE_WITH_INDENT_REGEX, "\n" + indent.repeat(indentationLevel))}`
-                        + `\n${indent.repeat(indentationLevel)}caused by, ${MochaVErrorReporter.fullStack(cause, indent, indentationLevel+1)}`;
+                return `${error.stack.replace(MochaVErrorReporter._REPLACE_WITH_INDENT_REGEX, "\n"
+                    + indent.repeat(indentationLevel))}`
+                    + `\n${indent.repeat(indentationLevel)}caused by, `
+                    + `${MochaVErrorReporter.fullStack(cause, indent, indentationLevel + 1)}`;
             }
         }
-        return VError.fullStack(error).replace(MochaVErrorReporter._REPLACE_WITH_INDENT_REGEX, "\n" + indent.repeat(indentationLevel));
+        return VError.fullStack(error).replace(MochaVErrorReporter._REPLACE_WITH_INDENT_REGEX, "\n"
+            + indent.repeat(indentationLevel));
     }
 }
