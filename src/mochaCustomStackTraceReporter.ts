@@ -1,19 +1,18 @@
 import { reporters, Runner } from "mocha";
 
-export class MochaVErrorReporter extends reporters.Base
+export class MochaCustomStackTraceReporter extends reporters.Base
 {
     constructor(runner: Runner)
     {
         super(runner);
         runner.on("fail", (test, error: Error) =>
         {
-            error.stack = MochaVErrorReporter.fullStack(error);
+            error.stack = MochaCustomStackTraceReporter.stackTrace(error);
         });
     }
 
-    public static fullStack(error: any): string
+    public static stackTrace(error: any): string
     {
         return (typeof error.stackTrace === "function") ? error.stackTrace() : error.stack;
     }
-
 }

@@ -1,38 +1,53 @@
-
 import { expect } from "chai";
-import { MochaVErrorReporter } from "../src/mochaVErrorReporter";
+import { MochaCustomStackTraceReporter } from "../src/mochaCustomStackTraceReporter";
 
-describe("MochaVErrorReporter", () =>
+describe("MochaCustomStackTraceReporter", () =>
 {
-
     class ErrorWithExternalStackTrace extends Error
     {
-        stackTraceString: string;
-        stackTrace = () => {
-            return this.stackTraceString;
-        }
+        private readonly stackTrace_: string;
         
         constructor(stackTrace: string)
         {
             super("example error");
-            this.stackTraceString = stackTrace;
+            this.stackTrace_ = stackTrace;
         }
 
+        public stackTrace(): string
+	    {
+            return this.stackTrace_;
+        }
     }
 
-    it("outputs the correct output when there is a 'stackTrace' function",  () =>
+    class DerivedFromErrorWithExternalStackTrace extends ErrorWithExternalStackTrace
     {
-        const testStackMessage = "external stack trace";
-        const sampleError = new ErrorWithExternalStackTrace(testStackMessage);
-        const fnOutput = MochaVErrorReporter.fullStack(sampleError);
-        expect(fnOutput).to.equal(testStackMessage); 
+        constructor(stackTrace: string)
+        {
+            super(stackTrace);
+        }
+    }
+
+    it("outputs the correct value when there is a 'stackTrace' function in the error class", () =>
+    {
+        const testStackTrace = "external stack trace";
+        const sampleError = new ErrorWithExternalStackTrace(testStackTrace);
+        const actualStackTrace = MochaCustomStackTraceReporter.stackTrace(sampleError);
+        expect(actualStackTrace).to.equal(testStackTrace); 
     });
 
-    it("outputs the correct output when there is not a 'stackTrace' function",  () =>
+    it("outputs the correct value when there is a 'stackTrace' function in the parent error class", () =>
     {
-        const testStackMessage = "external stack trace";
-        const sampleError = new Error(testStackMessage);
-        const fnOutput = MochaVErrorReporter.fullStack(sampleError);
-        expect(fnOutput).to.not.equal(testStackMessage);
+        const testStackTrace = "external stack trace";
+        const sampleError = new DerivedFromErrorWithExternalStackTrace(testStackTrace);
+        const actualStackTrace = MochaCustomStackTraceReporter.stackTrace(sampleError);
+        expect(actualStackTrace).to.equal(testStackTrace); 
+    });
+
+    it("outputs the correct value when there is no 'stackTrace' function", () =>
+    {
+        const testStackTrace = "external stack trace";
+        const sampleError = new Error(testStackTrace);
+        const actualStackTrace = MochaCustomStackTraceReporter.stackTrace(sampleError);
+        expect(actualStackTrace).to.not.equal(testStackTrace);
     });
 });
