@@ -1,16 +1,16 @@
 {
   "author": "Unscrambl",
-  "name": "mocha-verror-reporter",
+  "name": "mocha-custom-stack-trace-reporter",
   "version": "1.0.0",
-  "description": "Expand Mocha error reports for stacked VErrors",
-  "main": "built/mochaVErrorReporter.js",
+  "description": "Expand Mocha error reports with custom stack traces",
+  "main": "built/mochaCustomStackTraceReporter.js",
   "dependencies": {
-    "@types/mocha": "^5.2.5",
     "mocha": "5.2.0",
     "tslint": "^5.11.0",
     "typescript": "^3.1.6"
   },
   "devDependencies": {
+    "@types/mocha": "^5.2.5",
     "chai": "4.1.2"
   },
   "scripts": {
