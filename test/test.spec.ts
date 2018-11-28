@@ -5,7 +5,7 @@ import { MochaVErrorReporter } from "../src/mochaVErrorReporter";
 describe("MochaVErrorReporter", () =>
 {
 
-    class ErrorWithExampleStackTrace extends Error
+    class ExampleErrorWithStackTrace extends Error
     {
         stackTraceString: string;
         stackTrace = () => {
@@ -23,7 +23,7 @@ describe("MochaVErrorReporter", () =>
     it("outputs the correct information when there is a 'stackTrace' function",  () =>
     {
         const testStackMessage = "example stack trace";
-        const sampleError = new ErrorWithExampleStackTrace(testStackMessage);
+        const sampleError = new ExampleErrorWithStackTrace(testStackMessage);
         const fnOutput = MochaVErrorReporter.fullStack(sampleError);
         expect(fnOutput).to.equal(testStackMessage); 
     });
