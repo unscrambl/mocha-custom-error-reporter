@@ -1,6 +1,6 @@
 import { reporters, Runner } from "mocha";
 
-export class MochaCustomStackTraceReporter extends reporters.Base
+class MochaCustomStackTraceReporter extends reporters.Base
 {
     constructor(runner: Runner)
     {
@@ -17,4 +17,4 @@ export class MochaCustomStackTraceReporter extends reporters.Base
     }
 }
 
-module.exports = MochaCustomStackTraceReporter;
+export = MochaCustomStackTraceReporter;
