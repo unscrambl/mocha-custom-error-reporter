@@ -1,5 +1,6 @@
 import { expect } from "chai";
-import { MochaCustomStackTraceReporter } from "../src/mochaCustomStackTraceReporter";
+
+var MochaCustomStackTraceReporter = require("../src/mochaCustomStackTraceReporter");
 
 describe("MochaCustomStackTraceReporter", () =>
 {
