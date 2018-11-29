@@ -1,21 +1,18 @@
 {
     "compilerOptions": {
-        "outDir": "./built",
-        "target": "es5",
         "alwaysStrict": true,
         "baseUrl": "./",
         "declaration": true,
         "experimentalDecorators": true,
-        "lib": [
-            "dom",
-            "es2017"
-        ],
+        "module": "commonjs",
         "noImplicitThis": true,
         "noUnusedLocals": true,
+        "outDir": "./built",
         "preserveConstEnums": true,
         "removeComments": true,
         "strictFunctionTypes": true,
-        "strictNullChecks": true
+        "strictNullChecks": true,
+        "target": "es6"
     },
     "include": [
         "./src/**/*",
