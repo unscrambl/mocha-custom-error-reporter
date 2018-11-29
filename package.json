@@ -3,7 +3,7 @@
   "name": "mocha-custom-stack-trace-reporter",
   "version": "1.0.0",
   "description": "Expand Mocha error reports with custom stack traces",
-  "main": "built/mochaCustomStackTraceReporter.js",
+  "main": "built/src/mochaCustomStackTraceReporter.js",
   "dependencies": {
     "mocha": "5.2.0",
     "tslint": "^5.11.0",
