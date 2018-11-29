@@ -16,3 +16,5 @@ export class MochaCustomStackTraceReporter extends reporters.Base
         return (typeof error.stackTrace === "function") ? error.stackTrace() : error.stack;
     }
 }
+
+module.exports = MochaCustomStackTraceReporter;
