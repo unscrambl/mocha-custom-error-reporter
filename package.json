@@ -5,6 +5,7 @@
   "description": "Expand Mocha error reports with custom stack traces",
   "main": "built/src/mochaCustomStackTraceReporter.js",
   "dependencies": {
+    "@types/mocha": "^5.2.5",
     "@types/node": "^10.12.10",
     "mocha": "5.2.0",
     "tslint": "^5.11.0",
