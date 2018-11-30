@@ -1,7 +1,7 @@
 {
   "author": "Unscrambl",
   "name": "mocha-custom-stack-trace-reporter",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "Expand Mocha error reports with custom stack traces",
   "main": "built/src/mochaCustomStackTraceReporter.js",
   "dependencies": {
@@ -17,8 +17,9 @@
   "scripts": {
     "build": "tsc --project tsconfig.json",
     "pretest": "rm -rf built && npm run build",
+    "prepublish": "rm -rf built && npm run build",
     "test": "mocha -R spec --check-leaks built/test/*.spec.js"
   },
   "license": "Apache-2.0",
-  "repository": "github:unscrambl/mocha-verror-reporter.git"
+  "repository": "github:unscrambl/mocha-custom-stack-trace-reporter.git"
 }
