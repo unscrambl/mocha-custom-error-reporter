@@ -9,6 +9,13 @@ class MochaCustomStackTraceReporter extends reporters.Base
         {
             error.stack = MochaCustomStackTraceReporter.stackTrace(error);
         });
+
+        runner.on("start", () => {
+            process.on("unhandledRejection", (reason, promise) => {
+                console.log("ERROR: the execution failed due to an unhandled promise rejection, details: %s", reason.stack || reason);
+                process.exit(process.exitCode | 100);
+            });
+        });
     }
 
     public static stackTrace(error: any): string
