@@ -12,8 +12,8 @@ class MochaCustomStackTraceReporter extends reporters.Base
 
         runner.on("start", () => {
             process.on("unhandledRejection", (reason, promise) => {
-                console.log("ERROR: the execution failed due to an unhandled promise rejection, details: %s", reason.stack || reason);
-                process.exit(process.exitCode | 100);
+                var reason_stack_or_reason = reason.stack || reason
+                throw new Error(`the execution failed due to an unhandled promise rejection, details: ${reason_stack_or_reason}`);
             });
         });
     }
