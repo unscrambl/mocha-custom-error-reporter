@@ -1,7 +1,7 @@
 {
   "author": "Unscrambl",
   "name": "mocha-custom-stack-trace-reporter",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Expand Mocha error reports with custom stack traces",
   "main": "built/src/mochaCustomStackTraceReporter.js",
   "dependencies": {
