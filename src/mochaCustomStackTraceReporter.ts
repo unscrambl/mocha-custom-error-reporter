@@ -11,10 +11,10 @@ class MochaCustomStackTraceReporter extends reporters.Base
         });
 
         runner.on("start", () => {
-            process.on("unhandledRejection", (reason, promise) => {
+            process.on("unhandledRejection", (reason : Error, promise) => {
                 // we are throwing an error here to avoid the process exiting with 0 exit code and not running subsequent
                 // tests in case of an unhandled promise rejection
-                var reason_stack_or_reason = reason.stack || reason
+                var reason_stack_or_reason = reason?.stack || reason
                 throw new Error(`the execution failed due to an unhandled promise rejection, details: ${reason_stack_or_reason}`);
             });
         });
@@ -27,3 +27,4 @@ class MochaCustomStackTraceReporter extends reporters.Base
 }
 
 export = MochaCustomStackTraceReporter;
+
